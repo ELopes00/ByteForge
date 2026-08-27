@@ -386,6 +386,50 @@ section{ padding: 96px 0; }
   align-items:center;
   justify-content:center;
   position:relative;
+  background: radial-gradient(circle at 28% 22%, #2A4A8F 0%, #0B1120 68%);
+  overflow:hidden;
+  perspective: 900px;
+}
+.product-thumb::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(circle at center, black, transparent 78%);
+}
+.product-thumb svg{
+  position:relative;
+  z-index:1;
+  width:62%;
+  height:auto;
+}
+.thumb-tile{
+  position:relative;
+  z-index:1;
+  width:72%;
+  aspect-ratio:1/1;
+  background: var(--white);
+  border-radius:18px;
+  box-shadow: 0 22px 32px -14px rgba(0,0,0,.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:12%;
+  overflow:hidden;
+}
+.thumb-tile img{
+  max-width:100%;
+  max-height:100%;
+  width:auto;
+  height:auto;
+  object-fit:contain;
+  transform-style: preserve-3d;
+  transition: transform .65s cubic-bezier(.4,.1,.2,1);
+  will-change: transform;
+}
+.product-thumb:hover .thumb-tile img{
+  transform: rotateY(180deg);
 }
 .product-body{ padding:22px 24px 26px; flex:1; display:flex; flex-direction:column; }
 .product-tag{
