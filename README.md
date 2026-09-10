@@ -20,6 +20,7 @@ ByteForge/
 ├── contact.html         → Contato e endereço
 ├── faq.html              → Central de dúvidas (FAQ)
 ├── 404.html              → Página de erro (link quebrado / página inexistente)
+├── account.html          → Login, cadastro e "Minhas compras" (conta do cliente)
 ├── robots.txt            → Diretivas para crawlers de busca
 ├── css/
 │   └── style.css        → Todo o estilo visual do site (cores, fontes, layout)
@@ -62,6 +63,12 @@ Como o cliente entra em contato com a loja:
 - **Informações de contato**: endereço (Rua João Batista, Bairro Cinturão Verde, Boa Vista - RR), telefone, e-mail e horário de funcionamento.
 - **Mapa estilizado**: uma representação visual (feita em CSS, não é um mapa real do Google Maps) só para indicar a localização da loja no layout.
 - **Formulário de contato**: campos de nome, e-mail, assunto e mensagem. Ao enviar, aparece uma mensagem de confirmação na tela — mas como não há um servidor por trás, nenhum e-mail é realmente enviado (é só para demonstrar a interface).
+
+### 👤 `account.html` — Minha conta
+A área do cliente, acessível pelo ícone "Account" no menu:
+- **Login / criar conta**: dois formulários lado a lado. As contas ficam salvas no `localStorage` do navegador (nada é enviado a um servidor) e a senha é transformada em hash com a Web Crypto API antes de ser guardada — mesmo assim, **é só uma demonstração**, o próprio formulário avisa isso e não deve ser usada com uma senha real.
+- **Botão "Buy now" nos produtos** (`index.html` e `product.html`): ao clicar, se o cliente estiver logado, o pedido é criado na hora; se não estiver, ele é levado para `account.html` e, assim que faz login ou se cadastra, a compra é concluída automaticamente.
+- **Minhas compras**: depois de logado, o cliente vê a lista de pedidos com uma barra de progresso de envio ("Pedido confirmado → Em preparação → Enviado → Em trânsito → Entregue"). Como não existe transportadora de verdade, o status avança sozinho com base no tempo decorrido desde a compra — é uma simulação para demonstrar como a funcionalidade se comportaria.
 
 ### ❓ `faq.html` — Central de dúvidas (Help Center)
 Perguntas frequentes organizadas por tema, no formato "sanfona" (accordion — clica e abre/fecha a resposta):
@@ -106,5 +113,6 @@ Este site passou por uma revisão de front-end que endereçou:
 
 **Limitações conhecidas (este é um site estático, sem back-end):**
 - Os formulários de contato e newsletter só simulam o envio no navegador — nenhum e-mail é realmente enviado. Para uso real com clientes, é necessário um back-end (ou serviço de formulário como Formspree/Netlify Forms) antes de publicar.
+- **A conta do cliente (`account.html`) também é uma simulação**: login, cadastro e histórico de compras ficam salvos só no `localStorage` deste navegador — não há servidor, banco de dados nem envio de e-mail de confirmação. Isso significa que a conta não aparece em outro computador/navegador, é perdida se o usuário limpar os dados do site, e qualquer pessoa com acesso às ferramentas de desenvolvedor do navegador consegue ler ou editar os dados salvos. Para uma loja real, essa parte precisa de um back-end de verdade com autenticação segura (sessões/cookies HttpOnly, hashing de senha no servidor) e um banco de dados.
 - Não há certificado HTTPS, cabeçalhos de segurança (CSP, HSTS) nem proteção antispam — esses dependem do provedor de hospedagem escolhido (GitHub Pages, Netlify, Vercel etc.) e devem ser configurados na hospedagem final.
 - As imagens de produto (`assets/products/`) estão na faixa de 100–400KB cada; antes de ir ao ar, vale convertê-las para WebP/AVIF para reduzir o tempo de carregamento.
