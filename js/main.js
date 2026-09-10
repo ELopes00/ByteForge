@@ -4,20 +4,39 @@ document.addEventListener('DOMContentLoaded', () => {
   const navToggle = document.querySelector('.nav-toggle');
   const navLinks = document.querySelector('.nav-links');
   if (navToggle && navLinks) {
-    navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navToggle.addEventListener('click', () => {
+      const isOpen = navLinks.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
     navLinks.querySelectorAll('a').forEach(a =>
-      a.addEventListener('click', () => navLinks.classList.remove('open'))
+      a.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      })
     );
   }
 
-  /* FAQ accordion */
+  /* FAQ accordion (keyboard-accessible) */
   document.querySelectorAll('.accordion-item').forEach(item => {
     const q = item.querySelector('.accordion-q');
     if (!q) return;
-    q.addEventListener('click', () => {
+    q.setAttribute('aria-expanded', item.classList.contains('open') ? 'true' : 'false');
+    const toggle = () => {
       const wasOpen = item.classList.contains('open');
-      item.closest('.faq-group')?.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
-      if (!wasOpen) item.classList.add('open');
+      const group = item.closest('.faq-group');
+      group?.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('open'));
+      group?.querySelectorAll('.accordion-q').forEach(otherQ => otherQ.setAttribute('aria-expanded', 'false'));
+      if (!wasOpen) {
+        item.classList.add('open');
+        q.setAttribute('aria-expanded', 'true');
+      }
+    };
+    q.addEventListener('click', toggle);
+    q.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
     });
   });
 
@@ -57,8 +76,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (chips.length && products.length) {
     chips.forEach(chip => {
       chip.addEventListener('click', () => {
-        chips.forEach(c => c.classList.remove('active'));
+        chips.forEach(c => { c.classList.remove('active'); c.setAttribute('aria-pressed', 'false'); });
         chip.classList.add('active');
+        chip.setAttribute('aria-pressed', 'true');
         const filter = chip.dataset.filter;
         products.forEach(card => {
           card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';

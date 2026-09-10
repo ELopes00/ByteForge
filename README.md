@@ -13,12 +13,14 @@ Site institucional (estático, multi-página) para a **ByteForge**, uma loja fic
 ## Estrutura de pastas
 
 ```
-circuithub-store/
+ByteForge/
 ├── index.html          → Página inicial
 ├── product.html         → Catálogo de produtos
 ├── identity.html        → Identidade visual da marca
 ├── contact.html         → Contato e endereço
 ├── faq.html              → Central de dúvidas (FAQ)
+├── 404.html              → Página de erro (link quebrado / página inexistente)
+├── robots.txt            → Diretivas para crawlers de busca
 ├── css/
 │   └── style.css        → Todo o estilo visual do site (cores, fontes, layout)
 ├── js/
@@ -92,3 +94,17 @@ Depois acesse `http://localhost:3000` no navegador.
 
 Este projeto está versionado com Git e publicado em:
 `https://github.com/ELopes00/ByteForge`
+
+## Revisão de qualidade, acessibilidade e SEO
+
+Este site passou por uma revisão de front-end que endereçou:
+
+- **Acessibilidade**: navegação por teclado no accordion do FAQ (`role="button"`, `tabindex`, Enter/Espaço), link "Skip to content", `aria-expanded`/`aria-pressed` sincronizados via JS no menu mobile e nos filtros de produto, ícones puramente decorativos marcados com `aria-hidden`, rótulos para os campos de e-mail (newsletter) e busca (FAQ) que só tinham `placeholder`, e contraste do rodapé ajustado para atender WCAG AA.
+- **SEO/compartilhamento**: metatags Open Graph e Twitter Card em todas as páginas, `theme-color`, dados estruturados `schema.org/ElectronicsStore` (endereço, telefone e horário) na página de contato, `robots.txt` e página `404.html` personalizada.
+- **Performance**: a fonte do Google Fonts passou de `@import` (bloqueia a renderização) para `<link rel="preconnect">` + `<link rel="stylesheet">` no `<head>`.
+- **Higiene do projeto**: comentário de cabeçalho do CSS ainda citava o nome antigo do projeto ("CircuitHub"); `.gitignore` adicionado.
+
+**Limitações conhecidas (este é um site estático, sem back-end):**
+- Os formulários de contato e newsletter só simulam o envio no navegador — nenhum e-mail é realmente enviado. Para uso real com clientes, é necessário um back-end (ou serviço de formulário como Formspree/Netlify Forms) antes de publicar.
+- Não há certificado HTTPS, cabeçalhos de segurança (CSP, HSTS) nem proteção antispam — esses dependem do provedor de hospedagem escolhido (GitHub Pages, Netlify, Vercel etc.) e devem ser configurados na hospedagem final.
+- As imagens de produto (`assets/products/`) estão na faixa de 100–400KB cada; antes de ir ao ar, vale convertê-las para WebP/AVIF para reduzir o tempo de carregamento.
