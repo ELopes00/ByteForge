@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Page not found — ByteForge</title>
-<meta name="description" content="The page you're looking for doesn't exist. Head back to ByteForge's homepage or catalog.">
+<title>My Account — ByteForge</title>
+<meta name="description" content="Log in to your ByteForge account to see your orders and shipping status.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><rect width=%2232%22 height=%2232%22 rx=%228%22 fill=%22%232F6FED%22/></svg>">
 <meta name="theme-color" content="#0B1120">
@@ -44,15 +44,84 @@
   </div>
 </header>
 
-<section class="page-hero" id="main" style="text-align:center;">
+<section class="page-hero" id="main">
   <div class="container">
-    <span class="eyebrow" style="justify-content:center;">404</span>
-    <h1 style="max-width:none;">This page took a wrong turn.</h1>
-    <p style="max-width:56ch; margin:0 auto 32px;">We couldn't find the page you were looking for. It may have been moved, or the link might be out of date.</p>
-    <div class="hero-actions" style="justify-content:center;">
-      <a href="index.html" class="btn btn-primary">Back to home</a>
-      <a href="product.html" class="btn btn-outline">Browse the catalog</a>
+    <span class="eyebrow">My account</span>
+    <h1>Your orders, your shipping status.</h1>
+    <p>Log in or create an account to see everything you've bought from ByteForge and track it to your door.</p>
+  </div>
+</section>
+
+<section style="padding-top:0;">
+  <div class="container">
+
+    <!-- ============ LOGGED OUT: login + register ============ -->
+    <div class="auth-gate" id="authGate">
+      <div class="auth-note">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2F6FED" stroke-width="1.6" aria-hidden="true" style="flex-shrink:0;"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.2" r=".2" fill="#2F6FED"/></svg>
+        <span><strong>Isto é uma demonstração.</strong> Contas e pedidos ficam salvos apenas neste navegador (localStorage) — não existe servidor por trás. Não use uma senha real.</span>
+      </div>
+      <div class="auth-pending-note" id="pendingNote">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0E7A73" stroke-width="1.8" aria-hidden="true" style="flex-shrink:0;"><path d="M6 12h13M13 6l6 6-6 6"/></svg>
+        <span>Faça login ou crie uma conta para concluir sua compra.</span>
+      </div>
+
+      <div class="auth-grid">
+        <div class="form">
+          <h2 style="font-size:1.3rem; margin-bottom:24px;">Já tenho conta</h2>
+          <form id="loginForm">
+            <div class="field">
+              <label for="loginEmail">Email</label>
+              <input type="email" id="loginEmail" placeholder="you@email.com" required autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="loginPassword">Senha</label>
+              <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+            <div class="auth-error" id="loginError">E-mail ou senha incorretos.</div>
+          </form>
+        </div>
+
+        <div class="form">
+          <h2 style="font-size:1.3rem; margin-bottom:24px;">Criar uma conta</h2>
+          <form id="registerForm">
+            <div class="field">
+              <label for="registerName">Nome</label>
+              <input type="text" id="registerName" placeholder="Marco Silva" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="registerEmail">Email</label>
+              <input type="email" id="registerEmail" placeholder="you@email.com" required autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="registerPassword">Senha</label>
+              <input type="password" id="registerPassword" placeholder="••••••••" required minlength="4" autocomplete="new-password">
+            </div>
+            <button type="submit" class="btn btn-outline btn-block">Criar conta</button>
+            <div class="auth-error" id="registerError">Já existe uma conta com este e-mail.</div>
+          </form>
+        </div>
+      </div>
     </div>
+
+    <!-- ============ LOGGED IN: dashboard ============ -->
+    <div class="account-dashboard" id="accountDashboard">
+      <div class="account-header">
+        <div>
+          <h2>Olá, <span id="accountUserName">—</span></h2>
+          <p>Seus pedidos e o status de envio de cada um.</p>
+        </div>
+        <button class="btn btn-outline" id="logoutBtn" type="button">Sair</button>
+      </div>
+
+      <div id="ordersList"></div>
+      <div class="orders-empty hide" id="ordersEmpty">
+        <p style="margin-bottom:18px;">Você ainda não fez nenhuma compra.</p>
+        <a href="product.html" class="btn btn-primary">Ver catálogo</a>
+      </div>
+    </div>
+
   </div>
 </section>
 
