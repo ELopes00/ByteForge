@@ -1,9 +1,9 @@
 /* ============================================================
-   CIRCUITHUB — Design System
+   BYTEFORGE — Design System
    Fonts: Space Grotesk (display/tech) + Inter (body)
+   Fonts are loaded via <link> in the HTML <head> (not @import)
+   so the browser can discover and fetch them earlier.
    ============================================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
 
 :root{
   /* --- Brand palette --- */
@@ -36,6 +36,23 @@
 
 *,*::before,*::after{ box-sizing: border-box; }
 html{ scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior: auto; }
+  *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+}
+.skip-link{
+  position:absolute;
+  left:16px; top:-60px;
+  z-index:1000;
+  background: var(--blue);
+  color:#fff;
+  padding:12px 18px;
+  border-radius: var(--radius-s);
+  font-weight:600;
+  font-size:.9rem;
+  transition: top .18s ease;
+}
+.skip-link:focus{ top:16px; }
 body{
   margin:0;
   font-family: var(--font-body);
@@ -822,7 +839,7 @@ section{ padding: 96px 0; }
 .footer-links li{ margin-bottom:10px; }
 .footer-links a{ color: rgba(244,246,251,.85); font-size:.92rem; }
 .footer-links a:hover{ color: var(--cyan); }
-.footer p.desc{ color: rgba(244,246,251,.65); font-size:.92rem; max-width:34ch; }
+.footer p.desc{ color: rgba(244,246,251,.72); font-size:.92rem; max-width:34ch; }
 .footer-bottom{
   display:flex;
   justify-content:space-between;
@@ -831,7 +848,7 @@ section{ padding: 96px 0; }
   flex-wrap:wrap;
   gap:14px;
   font-size:.82rem;
-  color: rgba(244,246,251,.55);
+  color: rgba(244,246,251,.7);
 }
 .social-row{ display:flex; gap:12px; }
 .social-row a{
